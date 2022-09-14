@@ -1,4 +1,5 @@
-import React, {useReducer} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useReducer, useCallback, useEffect} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
