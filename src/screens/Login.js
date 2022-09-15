@@ -24,7 +24,7 @@ const Login = ({navigation}) => {
   const {login} = useContext(AppContext);
 
   const [variables, setVariables] = useState({
-    email: 'raul@correo.jovenclub.cu',
+    email: 'raulglezrdguez69@gmail.com',
     password: '111111',
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -41,6 +41,7 @@ const Login = ({navigation}) => {
       setLoading(false);
       login(response.data);
     } catch (error) {
+      console.log(error);
       setLoading(false);
       if (error.response) {
         error.response.data ? setErrors(error.response.data) : setErrors({});
