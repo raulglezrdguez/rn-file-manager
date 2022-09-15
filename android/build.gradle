@@ -51,13 +51,11 @@ allprojects {
                 excludeGroup "com.facebook.react"
             }
         }
-        google()
+        //google()
+        google {
+    url 'https://maven.aliyun.com/repository/google'
+}
         maven { url 'https://www.jitpack.io' }
     }
 }
 
-subprojects { subproject ->
-        if(project['name'] == 'react-native-reanimated'){
-            project.configurations { compile { } }
-        }
-}
