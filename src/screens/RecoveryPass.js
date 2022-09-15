@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useContext, useState} from 'react';
@@ -51,7 +52,7 @@ const RecoveryPass = ({navigation}) => {
     } else {
       setErrors({token: 'Invalid token'});
     }
-  }, [variables.token, errors]);
+  }, [variables.token]);
 
   const recoveryPassUser = async () => {
     try {
@@ -194,7 +195,7 @@ const RecoveryPass = ({navigation}) => {
             onPress={recoveryPassUser}
             style={{width: '60%', alignSelf: 'center'}}
             disabled={
-              errors.token ||
+              errors.token !== null ||
               variables.token.length < 60 ||
               variables.password.length < 6 ||
               variables.confirmPassword !== variables.password ||
