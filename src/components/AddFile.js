@@ -17,10 +17,8 @@ import UploadIcon from './UploadIcon';
 
 import AppContext from '../context/AppContext';
 
-import config from '../../config';
-
 const AddFiles = ({user, navigation}) => {
-  const {uploadFile, showSnackbarMessage} = useContext(AppContext);
+  const {uploadFile} = useContext(AppContext);
   const [loadingFile, setLoadingFile] = useState(false);
   const [filetoupload, setFiletoupload] = useState(null);
   const [errors, setErrors] = useState({});
