@@ -213,7 +213,7 @@ const Register = ({navigation}) => {
               onPress={registerUser}
               style={{width: '60%', alignSelf: 'center'}}
               disabled={
-                variables.nick.length < 4 ||
+                variables.name.length < 4 ||
                 !re_email.test(String(variables.email).toLowerCase()) ||
                 variables.password.length < 6 ||
                 variables.confirmPassword !== variables.password ||
