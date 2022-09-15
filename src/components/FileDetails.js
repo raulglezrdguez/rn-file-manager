@@ -1,4 +1,3 @@
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
@@ -8,7 +7,6 @@ import {
   Card,
   HelperText,
   Snackbar,
-  Subheading,
   TextInput,
   useTheme,
 } from 'react-native-paper';
@@ -20,8 +18,7 @@ const FileDetails = ({file, editMode = false}) => {
   const theme = useTheme();
   const {id, name, originalFilename, size, status, updatedAt, createdAt} = file;
 
-  const {updateFile, deleteFile, downloadFile, showSnackbarMessage} =
-    useContext(AppContext);
+  const {updateFile, deleteFile, downloadFile} = useContext(AppContext);
 
   const [edit, setEdit] = useState(false);
   const [newName, setNewName] = useState(name);
