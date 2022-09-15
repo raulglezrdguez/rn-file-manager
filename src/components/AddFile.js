@@ -1,6 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useCallback} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {
   Button,
@@ -11,6 +11,7 @@ import {
   TouchableRipple,
   useTheme,
 } from 'react-native-paper';
+import DocumentPicker from 'react-native-document-picker';
 
 import UploadIcon from './UploadIcon';
 
@@ -26,15 +27,26 @@ const AddFiles = ({user, navigation}) => {
   const [name, setName] = useState('');
   const theme = useTheme();
 
-  const handleFileChange = event => {
-    const file = event.target.files[0];
-    if (file && file.size > 0) {
-      setFiletoupload(file);
-    } else {
-      setFiletoupload(null);
-      setErrors({general: 'File must have size greater than zero'});
+  // const handleFileChange = event => {
+  //   const file = event.target.files[0];
+  //   if (file && file.size > 0) {
+  //     setFiletoupload(file);
+  //   } else {
+  //     setFiletoupload(null);
+  //     setErrors({general: 'File must have size greater than zero'});
+  //   }
+  // };
+  const handleFileChange = useCallback(async () => {
+    try {
+      const response = await DocumentPicker.pick({
+        presentationStyle: 'fullScreen',
+        allowMultiSelection: false,
+      });
+      setFiletoupload(response);
+    } catch (err) {
+      console.warn(err);
     }
-  };
+  }, []);
 
   const submitForm = async file => {
     try {
