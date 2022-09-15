@@ -1,12 +1,23 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Snackbar, Subheading} from 'react-native-paper';
+import {
+  Button,
+  Caption,
+  Card,
+  HelperText,
+  Snackbar,
+  Subheading,
+  TextInput,
+  useTheme,
+} from 'react-native-paper';
 
 import AppContext from '../context/AppContext';
 import {dateToString} from '../util/dateFormat';
 
 const FileDetails = ({file, editMode = false}) => {
+  const theme = useTheme();
   const {id, name, originalFilename, size, status, updatedAt, createdAt} = file;
 
   const {updateFile, deleteFile, downloadFile, showSnackbarMessage} =
@@ -41,10 +52,86 @@ const FileDetails = ({file, editMode = false}) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.form}>
-        <Subheading style={{padding: 5}}>File details</Subheading>
-      </View>
+    <Card style={styles.container}>
+      <Card.Content>
+        {edit ? (
+          <View style={styles.column}>
+            <TextInput
+              label="Name"
+              value={newName}
+              onChangeText={text => setNewName(text)}
+              mode="outlined"
+              placeholder="name"
+              error={
+                newName.trim().length < 4 || (errors.name && errors.name !== '')
+              }
+              keyboardType="default"
+              style={{marginTop: 10}}
+            />
+            <HelperText
+              type="error"
+              visible={
+                newName.trim().length < 4 || (errors.name && errors.name !== '')
+              }>
+              {newName.trim().length < 4 ? 'Incorrect name' : errors.name}
+            </HelperText>
+          </View>
+        ) : (
+          <Caption style={{textAlign: 'left'}}>Name: {name}</Caption>
+        )}
+        {file.owner && (
+          <Caption style={{textAlign: 'left'}}>Owner: {file.owner}</Caption>
+        )}
+        <Caption style={{textAlign: 'left'}}>
+          Original name: {originalFilename}
+        </Caption>
+        <Caption style={{textAlign: 'left'}}>Size: {size} bytes</Caption>
+        <Caption style={{textAlign: 'left'}}>
+          Status: {status === 0 ? 'Uploaded' : 'Compressed'}
+        </Caption>
+        <Caption style={{textAlign: 'left'}}>
+          Created at: {dateToString(createdAt)}
+        </Caption>
+        <Caption style={{textAlign: 'left'}}>
+          Updated at: {dateToString(updatedAt)}
+        </Caption>
+      </Card.Content>
+      <Card.Actions>
+        {edit ? (
+          <>
+            <Button mode="outlined" onPress={changeName}>
+              Save
+            </Button>
+            <Button mode="outlined" onPress={() => setEdit(false)}>
+              Cancel
+            </Button>
+          </>
+        ) : (
+          <>
+            {editMode && (
+              <>
+                <Button mode="outlined" onPress={() => setEdit(true)}>
+                  Edit
+                </Button>
+                <Button
+                  mode="outlined"
+                  onPress={removeFile}
+                  color={theme.colors.error}>
+                  Delete
+                </Button>
+              </>
+            )}
+
+            <Button
+              mode="outlined"
+              onPress={getFile}
+              color={theme.colors.notification}>
+              Download
+            </Button>
+          </>
+        )}
+      </Card.Actions>
+
       <Snackbar
         visible={errors.general}
         onDismiss={() => setErrors({...errors, general: ''})}
@@ -54,7 +141,7 @@ const FileDetails = ({file, editMode = false}) => {
         }}>
         {errors.general}
       </Snackbar>
-    </View>
+    </Card>
   );
 };
 
