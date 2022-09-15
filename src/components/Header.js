@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useContext, useState} from 'react';
-import {Image} from 'react-native';
+import React, {useContext} from 'react';
 import {
   Appbar,
   Avatar,
@@ -13,15 +12,12 @@ import {useRoute} from '@react-navigation/native';
 import AppContext from '../context/AppContext';
 
 import {stringToColor} from '../util/utils';
-import config from '../../config';
 import FileManagerLogo from './FileManagerLogo';
 
 const Header = ({navigation, back}) => {
   const theme = useTheme();
   const route = useRoute();
   const {darkMode, switchDarkMode, user, logout} = useContext(AppContext);
-
-  const [errors, setErrors] = useState({});
 
   return (
     <Appbar.Header>
@@ -47,7 +43,7 @@ const Header = ({navigation, back}) => {
               label={user?.name[0].toUpperCase()}
               size={32}
               style={{
-                backgroundColor: stringToColor(user?.nick || ''),
+                backgroundColor: stringToColor(user?.name || ''),
                 marginHorizontal: 10,
               }}
               labelStyle={{
