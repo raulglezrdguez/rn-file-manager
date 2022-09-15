@@ -223,7 +223,7 @@ const ForgotPass = ({navigation}) => {
                 <Button
                   icon="login"
                   mode="outlined"
-                  onPress={() => navigation.navigate('Recovery')}>
+                  onPress={() => navigation.navigate('RecoveryPass')}>
                   Recovery
                 </Button>
               </View>
