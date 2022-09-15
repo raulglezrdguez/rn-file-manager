@@ -51,7 +51,7 @@ const Activate = ({navigation}) => {
     } else {
       setErrors({token: 'Invalid token'});
     }
-  }, [variables.token, errors]);
+  }, [variables.token]);
 
   const activateUser = async () => {
     try {
@@ -191,7 +191,7 @@ const Activate = ({navigation}) => {
             onPress={activateUser}
             style={{width: '60%', alignSelf: 'center'}}
             disabled={
-              errors.token ||
+              errors.token !== null ||
               variables.token.length < 60 ||
               variables.password.length < 6 ||
               variables.confirmPassword !== variables.password ||
