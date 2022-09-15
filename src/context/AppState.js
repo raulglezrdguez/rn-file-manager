@@ -29,6 +29,7 @@ import {
   SHOW_SNACKBAR_MESSAGE,
   CLOSE_SNACKBAR,
 } from './types';
+import config from '../../config';
 
 const initialState = {
   darkMode: true,
@@ -92,7 +93,7 @@ const AppState = props => {
   const updateFile = async payload => {
     try {
       const result = await axios.patch(
-        `${process.env.REACT_APP_SERVER_HOST}file/file`,
+        `${config.REACT_APP_SERVER_HOST}file/file`,
         payload,
         {
           headers: {Authorization: `Bearer ${state.user.token}`},
@@ -118,7 +119,7 @@ const AppState = props => {
       formData.append('name', payload.name);
 
       const result = await axios.post(
-        `${process.env.REACT_APP_SERVER_HOST}file/upload`,
+        `${config.REACT_APP_SERVER_HOST}file/upload`,
         formData,
         {
           headers: {
@@ -142,7 +143,7 @@ const AppState = props => {
   };
   const deleteFile = async payload => {
     try {
-      await axios.delete(`${process.env.REACT_APP_SERVER_HOST}file/file`, {
+      await axios.delete(`${config.REACT_APP_SERVER_HOST}file/file`, {
         headers: {Authorization: `Bearer ${state.user.token}`},
         data: {fileId: payload},
       });
@@ -163,7 +164,7 @@ const AppState = props => {
   const downloadFile = async payload => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_SERVER_HOST}file/download`,
+        `${config.REACT_APP_SERVER_HOST}file/download`,
         {
           params: {fileId: payload.fileId},
           headers: {Authorization: `Bearer ${state.user.token}`},

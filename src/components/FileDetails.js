@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {
   Button,
   Caption,
@@ -26,7 +26,7 @@ const FileDetails = ({file, editMode = false}) => {
 
   const changeName = async () => {
     const result = await updateFile({fileId: id, name: newName});
-
+    console.log(result);
     if (result.general) {
       setErrors({general: result.general});
     }
@@ -52,26 +52,30 @@ const FileDetails = ({file, editMode = false}) => {
     <Card style={styles.container}>
       <Card.Content>
         {edit ? (
-          <View style={styles.column}>
-            <TextInput
-              label="Name"
-              value={newName}
-              onChangeText={text => setNewName(text)}
-              mode="outlined"
-              placeholder="name"
-              error={
-                newName.trim().length < 4 || (errors.name && errors.name !== '')
-              }
-              keyboardType="default"
-              style={{marginTop: 10}}
-            />
-            <HelperText
-              type="error"
-              visible={
-                newName.trim().length < 4 || (errors.name && errors.name !== '')
-              }>
-              {newName.trim().length < 4 ? 'Incorrect name' : errors.name}
-            </HelperText>
+          <View style={styles.form}>
+            <ScrollView style={styles.scroll}>
+              <TextInput
+                label="Name"
+                value={newName}
+                onChangeText={text => setNewName(text)}
+                mode="outlined"
+                placeholder="name"
+                error={
+                  newName.trim().length < 4 ||
+                  (errors.name && errors.name !== '')
+                }
+                keyboardType="default"
+                style={{marginTop: 10}}
+              />
+              <HelperText
+                type="error"
+                visible={
+                  newName.trim().length < 4 ||
+                  (errors.name && errors.name !== '')
+                }>
+                {newName.trim().length < 4 ? 'Incorrect name' : errors.name}
+              </HelperText>
+            </ScrollView>
           </View>
         ) : (
           <Caption style={{textAlign: 'left'}}>Name: {name}</Caption>
@@ -161,5 +165,16 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  form: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '80%',
+  },
+  scroll: {
+    width: '100%',
+    padding: 2,
+    marginBottom: 10,
+    alignContent: 'center',
   },
 });
