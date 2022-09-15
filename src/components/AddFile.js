@@ -8,6 +8,7 @@ import {
   Snackbar,
   Subheading,
   TextInput,
+  TouchableRipple,
   useTheme,
 } from 'react-native-paper';
 
@@ -60,6 +61,9 @@ const AddFiles = ({user, navigation}) => {
       <View style={styles.form}>
         <Subheading style={{padding: 5}}>Upload files</Subheading>
         <ScrollView style={styles.scroll}>
+          <TouchableRipple onPress={handleFileChange}>
+            <UploadIcon />
+          </TouchableRipple>
           <TextInput
             label="Name"
             value={name}
