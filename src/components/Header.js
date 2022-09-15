@@ -33,7 +33,6 @@ const Header = ({navigation, back}) => {
       )}
       <Appbar.Content
         title="FileManager"
-        subtitle="File manager service"
         onPress={() => navigation.navigate('Home')}
       />
       {route.name === 'Home' && (
@@ -52,11 +51,7 @@ const Header = ({navigation, back}) => {
               }}
             />
           </TouchableRipple>
-          <IconButton
-            icon={darkMode ? 'weather-sunny' : 'weather-night'}
-            size={32}
-            onPress={logout}
-          />
+          <IconButton icon="exit-to-app" size={32} onPress={logout} />
         </>
       )}
       <IconButton
