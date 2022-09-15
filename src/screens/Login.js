@@ -39,6 +39,7 @@ const Login = ({navigation}) => {
         variables,
       );
       setLoading(false);
+      console.log(response.data);
       login(response.data);
     } catch (error) {
       console.log(error);

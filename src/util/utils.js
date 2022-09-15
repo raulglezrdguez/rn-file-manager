@@ -1,5 +1,5 @@
 /* eslint-disable no-bitwise */
-const stringToColor = string => {
+export const stringToColor = string => {
   let hash = 0;
   let i;
 
