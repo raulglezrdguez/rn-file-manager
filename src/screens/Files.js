@@ -7,7 +7,7 @@ import axios from 'axios';
 import AppContext from '../context/AppContext';
 
 import FileDetails from '../components/FileDetails';
-import AddFiles from '../components/AddFiles';
+import AddFile from '../components/AddFile';
 
 import config from '../../config';
 
@@ -41,7 +41,7 @@ const Files = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
-        <AddFiles />
+        <AddFile />
         <ScrollView style={styles.scroll}>
           {files.map(f => (
             <FileDetails key={f.id} file={f} editMode={true} />
