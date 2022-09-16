@@ -26,7 +26,7 @@ const FileDetails = ({file, editMode = false}) => {
 
   const requestWritePermission = async () => {
     try {
-      const granted = await PermissionsAndroid.request(
+      let granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         {
           title: 'FileManager App Write Permission',
@@ -38,7 +38,22 @@ const FileDetails = ({file, editMode = false}) => {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        return true;
+        granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          {
+            title: 'FileManager App Read Permission',
+            message:
+              'FileManager App needs access to read to your mobile so you can download files.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         return false;
       }
@@ -67,6 +82,7 @@ const FileDetails = ({file, editMode = false}) => {
     const hasPermission = await requestWritePermission();
     if (hasPermission) {
       const result = await downloadFile({fileId: id, name});
+      console.log(result);
       if (result && result.general) {
         setErrors({general: result.general});
       } else {

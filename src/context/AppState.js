@@ -166,37 +166,43 @@ const AppState = props => {
     const dirs = RNFetchBlob.fs.dirs;
     console.log(dirs.DocumentDir);
     console.log(dirs.DownloadDir);
-    console.log(dirs.DownloadDir + `/${payload.name}.zip`);
+    console.log(dirs.DocumentDir + `/${payload.name}.zip`);
     console.log(
       `${config.REACT_APP_SERVER_HOST}file/download?fileId=${payload.fileId}`,
     );
-    return {general: `The file saved to...`};
-    // try {
-    //   RNFetchBlob.config({
-    //     // response data will be saved to this path if it has access right.
-    //     path: dirs.DownloadDir + `/${payload.name}.zip`,
-    //   })
-    //     .fetch(
-    //       'GET',
-    //       `${config.REACT_APP_SERVER_HOST}file/download?fileId=${payload.fileId}`,
-    //       {
-    //         Authorization: `Bearer ${state.user.token}`,
-    //       },
-    //     )
-    //     .then(res => {
-    //       // the path should be dirs.DocumentDir + 'path-to-file.anything'
-    //       return {general: `The file saved to: ${res.path()}`};
-    //     });
-    // } catch (error) {
-    //   console.log(error);
-    //   if (error.response) {
-    //     return error.response.data;
-    //   } else if (error.request) {
-    //     return {general: 'No response received'};
-    //   } else {
-    //     return {general: error.message};
-    //   }
-    // }
+    // return {general: `The file saved to...`};
+    try {
+      const conf = RNFetchBlob.config({
+        // response data will be saved to this path if it has access right.
+        path: dirs.DocumentDir + `/${payload.name}.zip`,
+      });
+      const res = await conf.fetch(
+        'GET',
+        `${config.REACT_APP_SERVER_HOST}file/download?fileId=${payload.fileId}`,
+        {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      );
+      console.log(res);
+      return {general: `The file saved to: ${res.path()}`};
+      // .then(res => {
+      //   console.log(res);
+      //   // the path should be dirs.DocumentDir + 'path-to-file.anything'
+      //   return {general: `The file saved to: ${res.path()}`};
+      // })
+      // .catch(err => {
+      //   console.log(err);
+      // });
+    } catch (error) {
+      console.log(error);
+      if (error.response) {
+        return error.response.data;
+      } else if (error.request) {
+        return {general: 'No response received'};
+      } else {
+        return {general: error.message};
+      }
+    }
   };
 
   const setAllFiles = payload => {
