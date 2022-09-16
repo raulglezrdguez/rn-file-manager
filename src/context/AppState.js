@@ -8,6 +8,7 @@ import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from 'axios';
+import RNFetchBlob from 'rn-fetch-blob';
 
 import AppContext from './AppContext';
 import AppReducer from './AppReducer';
@@ -162,38 +163,40 @@ const AppState = props => {
     }
   };
   const downloadFile = async payload => {
-    try {
-      const response = await axios.get(
-        `${config.REACT_APP_SERVER_HOST}file/download`,
-        {
-          params: {fileId: payload.fileId},
-          headers: {Authorization: `Bearer ${state.user.token}`},
-          responseType: 'blob',
-        },
-      );
-      //   const href = URL.createObjectURL(response.data);
-
-      // create "a" HTLM element with href to file & click
-      // const link = document.createElement("a");
-      // link.href = href;
-      // link.setAttribute("download", `${payload.name}.zip`); //or any other extension
-      // document.body.appendChild(link);
-      // link.click();
-
-      // clean up "a" element & remove ObjectURL
-      // document.body.removeChild(link);
-      // URL.revokeObjectURL(`${process.env.REACT_APP_SERVER_HOST}file/download`);
-
-      return {general: `Downloading ${payload.name}.zip`};
-    } catch (error) {
-      if (error.response) {
-        return error.response.data;
-      } else if (error.request) {
-        return {general: 'No response received'};
-      } else {
-        return {general: error.message};
-      }
-    }
+    const dirs = RNFetchBlob.fs.dirs;
+    console.log(dirs.DocumentDir);
+    console.log(dirs.DownloadDir);
+    console.log(dirs.DownloadDir + `/${payload.name}.zip`);
+    console.log(
+      `${config.REACT_APP_SERVER_HOST}file/download?fileId=${payload.fileId}`,
+    );
+    return {general: `The file saved to...`};
+    // try {
+    //   RNFetchBlob.config({
+    //     // response data will be saved to this path if it has access right.
+    //     path: dirs.DownloadDir + `/${payload.name}.zip`,
+    //   })
+    //     .fetch(
+    //       'GET',
+    //       `${config.REACT_APP_SERVER_HOST}file/download?fileId=${payload.fileId}`,
+    //       {
+    //         Authorization: `Bearer ${state.user.token}`,
+    //       },
+    //     )
+    //     .then(res => {
+    //       // the path should be dirs.DocumentDir + 'path-to-file.anything'
+    //       return {general: `The file saved to: ${res.path()}`};
+    //     });
+    // } catch (error) {
+    //   console.log(error);
+    //   if (error.response) {
+    //     return error.response.data;
+    //   } else if (error.request) {
+    //     return {general: 'No response received'};
+    //   } else {
+    //     return {general: error.message};
+    //   }
+    // }
   };
 
   const setAllFiles = payload => {

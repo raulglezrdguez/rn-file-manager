@@ -41,7 +41,7 @@ const FileDetails = ({file, editMode = false}) => {
 
   const getFile = async () => {
     const result = await downloadFile({fileId: id, name});
-    if (result.general) {
+    if (result && result.general) {
       setErrors({general: result.general});
     } else {
       setErrors({general: "Can't download file: maybe it's not zipped yet"});
