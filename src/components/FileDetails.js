@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     flexWrap: 'wrap',
+    width: '100%',
   },
   column: {
     flexDirection: 'column',
