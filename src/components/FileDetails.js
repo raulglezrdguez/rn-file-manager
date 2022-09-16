@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {PermissionsAndroid, ScrollView, StyleSheet, View} from 'react-native';
 import {
   Button,
   Caption,
@@ -24,6 +24,30 @@ const FileDetails = ({file, editMode = false}) => {
   const [newName, setNewName] = useState(name);
   const [errors, setErrors] = useState({});
 
+  const requestWritePermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'FileManager App Write Permission',
+          message:
+            'FileManager App needs access to write to your mobile so you can download files.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.warn(err);
+      return false;
+    }
+  };
+
   const changeName = async () => {
     const result = await updateFile({fileId: id, name: newName});
     console.log(result);
@@ -40,11 +64,16 @@ const FileDetails = ({file, editMode = false}) => {
   };
 
   const getFile = async () => {
-    const result = await downloadFile({fileId: id, name});
-    if (result && result.general) {
-      setErrors({general: result.general});
+    const hasPermission = await requestWritePermission();
+    if (hasPermission) {
+      const result = await downloadFile({fileId: id, name});
+      if (result && result.general) {
+        setErrors({general: result.general});
+      } else {
+        setErrors({general: "Can't download file: maybe it's not zipped yet"});
+      }
     } else {
-      setErrors({general: "Can't download file: maybe it's not zipped yet"});
+      setErrors({general: 'You dont have permission'});
     }
   };
 
