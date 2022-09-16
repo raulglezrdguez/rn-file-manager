@@ -98,39 +98,41 @@ const FileDetails = ({file, editMode = false}) => {
         </Caption>
       </Card.Content>
       <Card.Actions>
-        {edit ? (
-          <>
-            <Button mode="outlined" onPress={changeName}>
-              Save
-            </Button>
-            <Button mode="outlined" onPress={() => setEdit(false)}>
-              Cancel
-            </Button>
-          </>
-        ) : (
-          <>
-            {editMode && (
-              <>
-                <Button mode="outlined" onPress={() => setEdit(true)}>
-                  Edit
-                </Button>
-                <Button
-                  mode="outlined"
-                  onPress={removeFile}
-                  color={theme.colors.error}>
-                  Delete
-                </Button>
-              </>
-            )}
+        <View style={styles.row}>
+          {edit ? (
+            <>
+              <Button mode="outlined" onPress={changeName}>
+                Save
+              </Button>
+              <Button mode="outlined" onPress={() => setEdit(false)}>
+                Cancel
+              </Button>
+            </>
+          ) : (
+            <>
+              {editMode && (
+                <>
+                  <Button mode="outlined" onPress={() => setEdit(true)}>
+                    Edit
+                  </Button>
+                  <Button
+                    mode="outlined"
+                    onPress={removeFile}
+                    color={theme.colors.error}>
+                    Delete
+                  </Button>
+                </>
+              )}
 
-            <Button
-              mode="outlined"
-              onPress={getFile}
-              color={theme.colors.notification}>
-              Download
-            </Button>
-          </>
-        )}
+              <Button
+                mode="outlined"
+                onPress={getFile}
+                color={theme.colors.notification}>
+                Download
+              </Button>
+            </>
+          )}
+        </View>
       </Card.Actions>
 
       <Snackbar
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
     flexWrap: 'wrap',
   },
