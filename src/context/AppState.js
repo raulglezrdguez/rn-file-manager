@@ -175,6 +175,7 @@ const AppState = props => {
       const conf = RNFetchBlob.config({
         // response data will be saved to this path if it has access right.
         path: dirs.DocumentDir + `/${payload.name}.zip`,
+        fileCache: true,
       });
       const res = await conf.fetch(
         'GET',
@@ -183,7 +184,7 @@ const AppState = props => {
           Authorization: `Bearer ${state.user.token}`,
         },
       );
-      console.log(res);
+      console.log(res.info());
       return {general: `The file saved to: ${res.path()}`};
       // .then(res => {
       //   console.log(res);
