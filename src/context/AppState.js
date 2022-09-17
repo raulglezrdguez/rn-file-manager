@@ -31,6 +31,7 @@ import {
   CLOSE_SNACKBAR,
 } from './types';
 import config from '../../config';
+import {Platform} from 'react-native';
 
 const initialState = {
   darkMode: true,
@@ -114,10 +115,18 @@ const AppState = props => {
     }
   };
   const uploadFile = async payload => {
+    const {name, filetoupload} = payload;
     try {
       const formData = new FormData();
-      formData.append('filetoupload', payload.filetoupload);
-      formData.append('name', payload.name);
+      formData.append('filetoupload', {
+        name: filetoupload[0].name,
+        type: filetoupload[0].type,
+        uri:
+          Platform.OS === 'ios'
+            ? filetoupload[0].uri.replace('file://', '')
+            : filetoupload[0].uri,
+      });
+      formData.append('name', name);
 
       const result = await axios.post(
         `${config.REACT_APP_SERVER_HOST}file/upload`,
