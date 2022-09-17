@@ -8,7 +8,7 @@ import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from 'axios';
-import RNFetchBlob from 'rn-fetch-blob';
+import RNFS from 'react-native-fs';
 
 import AppContext from './AppContext';
 import AppReducer from './AppReducer';
@@ -163,39 +163,23 @@ const AppState = props => {
     }
   };
   const downloadFile = async payload => {
-    const dirs = RNFetchBlob.fs.dirs;
-    console.log(dirs.DocumentDir);
-    console.log(dirs.DownloadDir);
-    console.log(dirs.DocumentDir + `/${payload.name}.zip`);
-    console.log(
-      `${config.REACT_APP_SERVER_HOST}file/download?fileId=${payload.fileId}`,
-    );
-    // return {general: `The file saved to...`};
     try {
-      const conf = RNFetchBlob.config({
-        // response data will be saved to this path if it has access right.
-        path: dirs.DocumentDir + `/${payload.name}.zip`,
-        fileCache: true,
-      });
-      const res = await conf.fetch(
-        'GET',
-        `${config.REACT_APP_SERVER_HOST}file/download?fileId=${payload.fileId}`,
-        {
-          Authorization: `Bearer ${state.user.token}`,
-        },
-      );
-      console.log(res.info());
-      return {general: `The file saved to: ${res.path()}`};
-      // .then(res => {
-      //   console.log(res);
-      //   // the path should be dirs.DocumentDir + 'path-to-file.anything'
-      //   return {general: `The file saved to: ${res.path()}`};
-      // })
-      // .catch(err => {
-      //   console.log(err);
-      // });
+      const options = {
+        fromUrl: `${config.REACT_APP_SERVER_HOST}file/download?fileId=${payload.fileId}`,
+        toFile: RNFS.ExternalStorageDirectoryPath + `/${payload.name}.zip`,
+        headers: {Authorization: `Bearer ${state.user.token}`},
+      };
+
+      const {promise: downloadPromise} = RNFS.downloadFile(options);
+      const {statusCode} = await downloadPromise;
+      console.log(statusCode);
+      if (statusCode === 200) {
+        return {general: 'File downloaded to your storage'};
+      } else {
+        return {general: `statusCode:${statusCode}`};
+      }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       if (error.response) {
         return error.response.data;
       } else if (error.request) {
