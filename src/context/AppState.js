@@ -161,7 +161,6 @@ const AppState = props => {
 
       return {general: 'File deleted'};
     } catch (error) {
-      console.log(error);
       if (error.response) {
         return error.response.data;
       } else if (error.request) {
@@ -181,14 +180,12 @@ const AppState = props => {
 
       const {promise: downloadPromise} = RNFS.downloadFile(options);
       const {statusCode} = await downloadPromise;
-      console.log(statusCode);
       if (statusCode === 200) {
         return {general: 'File downloaded to your storage'};
       } else {
         return {general: `statusCode:${statusCode}`};
       }
     } catch (error) {
-      console.log(error.message);
       if (error.response) {
         return error.response.data;
       } else if (error.request) {

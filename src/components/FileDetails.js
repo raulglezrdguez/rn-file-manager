@@ -65,8 +65,7 @@ const FileDetails = ({file, editMode = false}) => {
 
   const changeName = async () => {
     const result = await updateFile({fileId: id, name: newName});
-    console.log(result);
-    if (result.general) {
+    if (result && result.general) {
       setErrors({general: result.general});
     }
   };
@@ -82,7 +81,6 @@ const FileDetails = ({file, editMode = false}) => {
     const hasPermission = await requestWritePermission();
     if (hasPermission) {
       const result = await downloadFile({fileId: id, name});
-      console.log(result);
       if (result && result.general) {
         setErrors({general: result.general});
       } else {

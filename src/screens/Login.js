@@ -39,10 +39,8 @@ const Login = ({navigation}) => {
         variables,
       );
       setLoading(false);
-      console.log(response.data);
       login(response.data);
     } catch (error) {
-      console.log(error);
       setLoading(false);
       if (error.response) {
         error.response.data ? setErrors(error.response.data) : setErrors({});
