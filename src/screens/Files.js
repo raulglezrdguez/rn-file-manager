@@ -41,8 +41,8 @@ const Files = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
-        <AddFile />
         <ScrollView style={styles.scroll}>
+          <AddFile />
           {files.map(f => (
             <FileDetails key={f.id} file={f} editMode={true} />
           ))}
