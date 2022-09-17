@@ -79,10 +79,9 @@ const AddFiles = ({user, navigation}) => {
             {name.length < 4 ? 'Short name' : ''}
           </HelperText>
           <Button
-            icon="account-check"
             mode="contained"
             onPress={submitForm}
-            style={{width: '60%', alignSelf: 'center', marginVertical: 10}}
+            style={{width: '100%', alignSelf: 'center', marginBottom: 30}}
             disabled={name.trim().length < 4 || !filetoupload || loadingFile}>
             Upload file
           </Button>
