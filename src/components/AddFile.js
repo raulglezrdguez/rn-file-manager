@@ -72,7 +72,7 @@ const AddFiles = ({user, navigation}) => {
         <Subheading style={{padding: 5}}>Upload files</Subheading>
         <ScrollView style={styles.scroll}>
           <TouchableRipple onPress={handleFileChange}>
-            <UploadIcon stroke={theme.colors.primary} />
+            <UploadIcon fill={theme.colors.primary} width={50} height={50} />
           </TouchableRipple>
           <TextInput
             label="Name"
