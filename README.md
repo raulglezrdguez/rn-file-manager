@@ -1,11 +1,19 @@
-# React Native file manager
+# React Native FileManager project
 
 This project was bootstrapped with [React Native cli](https://reactnative.dev/).
 
-## Available Scripts
+## Clone and install
 
-In the project directory, you can run:
+### `git clone https://github.com/raulglezrdguez/rn-file-manager.git`
+
+### `npm install` or `yarn`
+
+## Scripts to start and run
+
+In the project directory run:
 
 ### `npm start`
+
+In another console run:
 
 ### `npm run android`
