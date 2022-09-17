@@ -31,7 +31,7 @@ const Home = ({navigation}) => {
         setErrors({general: error.message});
       }
     }
-  }, [user.token, setAllFiles]);
+  }, [user, setAllFiles]);
 
   useEffect(() => {
     loadFiles();
