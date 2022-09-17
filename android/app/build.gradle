@@ -279,7 +279,6 @@ dependencies {
     }
 
     implementation project(':react-native-fs')
-    implementation project(':rn-fetch-blob')
 }
 
 if (isNewArchitectureEnabled()) {
