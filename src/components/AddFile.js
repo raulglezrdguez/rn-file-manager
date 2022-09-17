@@ -51,7 +51,7 @@ const AddFiles = ({user, navigation}) => {
       setLoadingFile(true);
       const result = await uploadFile({filetoupload, name: name.trim()});
       setLoadingFile(false);
-      if (result.general) {
+      if (result && result.general) {
         setErrors({general: result.general});
       }
     } catch (error) {
