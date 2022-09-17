@@ -13,5 +13,3 @@ if (settings.hasProperty("newArchEnabled") && settings.newArchEnabled == "true")
 include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(settingsDir, '../node_modules/react-native-fs/android')
 
-include ':rn-fetch-blob'                                                                                                  
-project(':rn-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/rn-fetch-blob/android')                        
