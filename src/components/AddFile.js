@@ -25,15 +25,6 @@ const AddFiles = ({user, navigation}) => {
   const [name, setName] = useState('');
   const theme = useTheme();
 
-  // const handleFileChange = event => {
-  //   const file = event.target.files[0];
-  //   if (file && file.size > 0) {
-  //     setFiletoupload(file);
-  //   } else {
-  //     setFiletoupload(null);
-  //     setErrors({general: 'File must have size greater than zero'});
-  //   }
-  // };
   const handleFileChange = useCallback(async () => {
     try {
       const response = await DocumentPicker.pick({
